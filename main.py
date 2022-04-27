@@ -12,10 +12,9 @@ for uploaded_file in uploaded_files:
     datas = pd.read_csv(uploaded_file, skiprows=1,index_col=False)
     shape = datas.shape
 
-    if(shape[1] == 5)
+    if(shape[1] == 5):
         datas = datas.drop(['Tipo', 'Mensaje'], axis=1)
-    
-    else
+    else:
         datas = datas.drop(['Tipo', 'Estado', 'Mensaje', 'Unnamed: 6'], axis=1)
     
 
