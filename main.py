@@ -12,12 +12,12 @@ for uploaded_file in uploaded_files:
     datas = pd.read_csv(uploaded_file, skiprows=1,index_col=False)
     shape = datas.shape
 
-    if(shape[1] == 5){
-        data = data.drop(['Tipo', 'Mensaje'], axis=1)
-    }
-    else{
+    if(shape[1] == 5)
+        datas = datas.drop(['Tipo', 'Mensaje'], axis=1)
+    
+    else
         datas = datas.drop(['Tipo', 'Estado', 'Mensaje', 'Unnamed: 6'], axis=1)
-    }
+    
 
     update=datas[datas["Monitor"].str.contains("UPDATE", case=False)].index
     datas=datas.drop(update)
