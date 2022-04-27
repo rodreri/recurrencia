@@ -4,21 +4,35 @@ import numpy as np
 
 st.title('Reporte de recurrencia SiteScope')
 
-# Fucnion para poder cargar los CSV
-def load_data():
-    data = pd.read_csv('sites/FULL.csv')
-    data = data.drop(['Unnamed: 0'], axis=1)
-    return data
+data = pd.DataFrame()
 
-# Cargamos los csv
-data_load_state = st.text('Loading data...')
-data = load_data()
-data_load_state.text("Datos cargados con exito")
+uploaded_files = st.file_uploader("Elige los 4 CSV de los sites", accept_multiple_files=True)
+for uploaded_file in uploaded_files:
+
+    datas = pd.read_csv(uploaded_file, skiprows=1,index_col=False)
+    datas = datas.drop(['Tipo', 'Estado', 'Mensaje', 'Unnamed: 6'], axis=1)
+
+    update=datas[datas["Monitor"].str.contains("UPDATE", case=False)].index
+    datas=datas.drop(update)
+    relay=datas[datas["Monitor"].str.contains("RELAY", case=False)].index
+    datas=datas.drop(relay)
+    healt=datas[datas["Monitor"].str.contains("HEALT", case=False)].index
+    datas=datas.drop(healt)
+    top=datas[datas["Monitor"].str.contains("TOPREPORT", case=False)].index
+    datas=datas.drop(top)
+
+    data = pd.concat([data, datas], axis=0)
+
+vcenter=data[data["Grupo"].str.contains("VCENTER", case=False)].index
+data=data.drop(vcenter)
+
+# Desde aqui no tocar
 
 # Datos originales antes de procesar
 if st.checkbox('Mostrar tabla original'):
     st.subheader('Alertas...')
     st.write(data)
+    st.write(data.shape)
     
 # Alertas por servicio
 if st.checkbox('Alertas por servicio'):
