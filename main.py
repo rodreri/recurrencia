@@ -6,11 +6,18 @@ st.title('Reporte de recurrencia SiteScope')
 
 data = pd.DataFrame()
 
-uploaded_files = st.file_uploader("Elige los 4 CSV de los sites", accept_multiple_files=True)
+uploaded_files = st.file_uploader("Elige los 5 CSV de los sites", accept_multiple_files=True)
 for uploaded_file in uploaded_files:
 
     datas = pd.read_csv(uploaded_file, skiprows=1,index_col=False)
-    datas = datas.drop(['Tipo', 'Estado', 'Mensaje', 'Unnamed: 6'], axis=1)
+    shape = datas.shape
+
+    if(shape[1] == 5){
+        data = data.drop(['Tipo', 'Mensaje'], axis=1)
+    }
+    else{
+        datas = datas.drop(['Tipo', 'Estado', 'Mensaje', 'Unnamed: 6'], axis=1)
+    }
 
     update=datas[datas["Monitor"].str.contains("UPDATE", case=False)].index
     datas=datas.drop(update)
