@@ -14,6 +14,7 @@ for uploaded_file in uploaded_files:
 
     if(shape[1] == 5):
         datas = datas.drop(['Tipo', 'Mensaje'], axis=1)
+        datas.columns = ['Fecha','Monitor','Grupo']
     else:
         datas = datas.drop(['Tipo', 'Estado', 'Mensaje', 'Unnamed: 6'], axis=1)
     
