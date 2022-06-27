@@ -84,7 +84,8 @@ if st.checkbox('Analisis de los datos'):
     names.columns = ['Servicio', 'Tipo1', 'Tipo2', 'Tipo3', 'Tipo4', 'Tipo5']
     df = pd.concat([data, names], axis=1)
 
-    df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d%m%Y%H%M')
+    df['Fecha'] = pd.to_datetime(df['Fecha'])
+
     df["Time"] = df["Fecha"].dt.time
     df["Date"] = df["Fecha"].dt.date
 
