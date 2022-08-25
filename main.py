@@ -85,7 +85,6 @@ if st.checkbox('Analisis de los datos'):
     df = pd.concat([data, names], axis=1)
 
     df['Fecha'] = pd.to_datetime(df['Fecha'])
-
     df["Time"] = df["Fecha"].dt.time
     df["Date"] = df["Fecha"].dt.date
 
